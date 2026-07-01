@@ -37,7 +37,7 @@ Navigator descriptions were refined through iterative routing experiments to fun
 | [MC MobilePush Navigator](skills/salesforce-marketing-cloud-mobilepush-navigator/) | MobilePush SDK | "How do I register a device for push notifications?" "How do I set a Contact Key in the SDK?" |
 | [Platform Mobile Navigator](skills/salesforce-platform-mobile-navigator/) | Salesforce Mobile SDK | "How do I implement SmartStore offline storage?" "How do I set up OAuth for a mobile app?" |
 
-> **Products without a dedicated Navigator** — Agentforce, Data Cloud, Marketing Cloud Personalization, CRM Analytics, and MuleSoft do not yet have dedicated Navigators. Questions about these products are routed through existing Domain Navigators based on documentation type (configuration → Help Navigator, APIs → Developer Navigator, architecture → Architect Navigator, etc.). See [PROJECT_STANDARD.md §7](PROJECT_STANDARD.md) for the full interim routing table.
+> **Products without a dedicated Navigator** — Agentforce, Data Cloud, Marketing Cloud Personalization, CRM Analytics, and MuleSoft do not yet have dedicated Navigators. Questions about these products are routed through existing Domain Navigators based on documentation type (configuration → Help Navigator, APIs → Developer Navigator, architecture → Architect Navigator, etc.). See [PROJECT_STANDARD.md §7](PROJECT_STANDARD.md) for the full interim routing table. Additional Navigators are planned for future releases.
 
 ---
 
@@ -89,12 +89,6 @@ All Navigators follow the [Project Standard](PROJECT_STANDARD.md):
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution guide, including how to create new Navigators, the description design methodology, and the process for retiring interim ownership.
-
----
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md) for planned V2 Navigators including dedicated skills for Agentforce, Data Cloud, Marketing Cloud Personalization, CRM Analytics, and MuleSoft.
 
 ---
 

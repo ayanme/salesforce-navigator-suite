@@ -428,7 +428,7 @@ Promotion requires: removing the product from this table; creating a dedicated N
 
 #### Marketing Cloud Personalization (Interim)
 
-Formerly Interaction Studio. No dedicated Navigator exists yet. See [ROADMAP.md](ROADMAP.md).
+Formerly Interaction Studio. No dedicated Navigator exists yet. A dedicated Navigator is planned for a future release.
 
 | Documentation Type | Interim Owner |
 |---|---|
@@ -440,7 +440,7 @@ Formerly Interaction Studio. No dedicated Navigator exists yet. See [ROADMAP.md]
 
 #### CRM Analytics (Interim)
 
-Formerly Tableau CRM and Einstein Analytics. No dedicated Navigator exists yet. See [ROADMAP.md](ROADMAP.md).
+Formerly Tableau CRM and Einstein Analytics. No dedicated Navigator exists yet. A dedicated Navigator is planned for a future release.
 
 | Documentation Type | Interim Owner |
 |---|---|
@@ -452,7 +452,7 @@ Formerly Tableau CRM and Einstein Analytics. No dedicated Navigator exists yet. 
 
 #### MuleSoft (Interim)
 
-No dedicated Navigator exists yet. See [ROADMAP.md](ROADMAP.md).
+No dedicated Navigator exists yet. A dedicated Navigator is planned for a future release.
 
 > **Coverage note:** MuleSoft primary documentation is hosted at docs.mulesoft.com, which is not a current Approved Source. Interim coverage through existing Navigators is limited to Salesforce-hosted documentation. A dedicated MuleSoft Navigator will expand Approved Sources to include docs.mulesoft.com.
 

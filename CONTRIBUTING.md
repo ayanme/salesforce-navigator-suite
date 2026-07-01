@@ -24,7 +24,7 @@ A new Navigator requires a documentation domain that is not already owned by an 
 
 Check the Skill Ownership Matrix in PROJECT_STANDARD.md §6 and the confirmed ownership boundaries in §7. If the domain you want to cover is already owned by an existing Navigator, contribute to that Navigator instead of creating a new one.
 
-If the domain is covered by interim ownership (Agentforce, Data Cloud, Marketing Cloud Personalization, CRM Analytics, MuleSoft), check the Roadmap first — a dedicated Navigator may already be planned.
+If the domain is covered by interim ownership (Agentforce, Data Cloud, Marketing Cloud Personalization, CRM Analytics, MuleSoft), a dedicated Navigator may already be planned — open an issue to discuss before starting.
 
 ### Step 2 — Identify the primary official Salesforce source
 
@@ -192,12 +192,7 @@ Current Product Specialist Navigators:
 - **Salesforce Marketing Cloud MobilePush Navigator** — consolidates MobilePush SDK, Unified Mobile SDK, and mobile engagement documentation
 - **Salesforce Platform Mobile Navigator** — consolidates Salesforce Platform Mobile SDK, SmartStore, and MobileSync documentation
 
-Planned Product Specialist Navigators (see [ROADMAP.md](ROADMAP.md)):
-- Salesforce Agentforce Navigator
-- Salesforce Data Cloud Navigator
-- Salesforce Marketing Cloud Personalization Navigator
-- Salesforce CRM Analytics Navigator
-- Salesforce MuleSoft Navigator
+Additional Product Specialist Navigators are planned for future releases.
 
 ### When to create a Product Specialist Navigator
 
@@ -239,9 +234,9 @@ Each Domain Navigator that carried interim ownership for this product will have 
 
 After removal, confirm that no domain is now unowned. Run the Confirmed Ownership Boundaries table in PROJECT_STANDARD.md §7 against the new Navigator to verify there are no gaps or overlaps.
 
-### Step 5 — Update ROADMAP.md
+### Step 5 — Update CHANGELOG.md
 
-Remove the product from the Roadmap once the dedicated Navigator is published. If the Navigator is an MVP with known scope gaps, document those gaps in a new Roadmap entry rather than leaving them unaddressed.
+If the Navigator retires interim ownership for a previously planned product, note this in CHANGELOG.md as a Minor version increment alongside the new Navigator entry.
 
 ### Step 6 — Update CHANGELOG.md
 
