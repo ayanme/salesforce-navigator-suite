@@ -31,7 +31,7 @@ Every Navigator definition file follows this structure:
 name:
 navigator_version:
 standard_version:
-description: (intent classifier; natural language; "Use when users ask..."; states what the Navigator owns and representative user intents; explicit ownership of cross-cutting products; may be a concise multi-line YAML block; see §3 Description Design)
+description: (intent classifier; two-part format: third-person capability statement first — "This Navigator researches [domain] from official [source] documentation." — followed by a trigger phrase — "Use when the user asks..."; states what the Navigator owns and representative user intents; explicit ownership of cross-cutting products; may be a concise multi-line YAML block; see §3 Description Design)
 
 Repository Standards  ← portability section: compressed summary of essential standalone behavior
 Purpose
