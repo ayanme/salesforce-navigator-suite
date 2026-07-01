@@ -1,8 +1,12 @@
 # Salesforce Navigator Suite
 
-A collection of specialist Claude skills for researching official Salesforce documentation. Each Navigator is scoped to a single Salesforce documentation domain and retrieves answers only from approved official sources — no community sites, blogs, or model memory.
+Navigate Salesforce documentation with specialized Claude Skills.
 
-Built for Salesforce consultants, architects, and developers who need fast, accurate, source-cited answers directly from official Salesforce documentation.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Claude Skills](https://img.shields.io/badge/Claude-Skills-blueviolet.svg) ![Navigators](https://img.shields.io/badge/Navigators-8-0176d3.svg) ![Sources](https://img.shields.io/badge/Sources-Official%20Salesforce-00A1E0.svg)
+
+A suite of specialized Claude Skills for researching Salesforce using official documentation. Each Navigator is scoped to a single Salesforce documentation domain, prioritizing official Salesforce documentation over community content and model memory.
+
+Built for Salesforce administrators, consultants, architects, and developers who need fast, accurate, source-cited answers directly from official Salesforce documentation.
 
 > *This project is not affiliated with or endorsed by Salesforce, Inc. "Salesforce" is a registered trademark of Salesforce, Inc.*
 
@@ -20,7 +24,7 @@ Navigator descriptions were refined through iterative routing experiments to fun
 
 ## Navigator Overview
 
-| Navigator | Documentation Domain | Typical Questions |
+| Navigator | Documentation Focus | Example Questions |
 |---|---|---|
 | [Help Navigator](skills/salesforce-help-navigator/) | Configuration & Administration | "How do I configure permission sets?" "What editions include this feature?" "How do I set up MFA?" |
 | [Developer Navigator](skills/salesforce-developer-navigator/) | APIs, SDKs & Code | "How do I write an Apex trigger?" "What are the REST API limits?" "How do I use the Bulk API?" |
