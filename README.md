@@ -2,9 +2,11 @@
 
 Navigate Salesforce documentation with specialized Claude Skills.
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Claude Skills](https://img.shields.io/badge/Claude-Skills-blueviolet.svg) ![Navigators](https://img.shields.io/badge/Navigators-8-0176d3.svg) ![Sources](https://img.shields.io/badge/Sources-Official%20Salesforce-00A1E0.svg)
+A suite of specialized Claude Skills for researching official Salesforce documentation.
 
-A suite of specialized Claude Skills for researching Salesforce using official documentation. Each Navigator is scoped to a single Salesforce documentation domain, prioritizing official Salesforce documentation over community content and model memory.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Claude Skills](https://img.shields.io/badge/Claude-Skills-blueviolet.svg)
+
+Each Navigator is scoped to a single Salesforce documentation domain, prioritizing official Salesforce documentation over community content and model memory.
 
 Built for Salesforce administrators, consultants, architects, and developers who need fast, accurate, source-cited answers directly from official Salesforce documentation.
 
