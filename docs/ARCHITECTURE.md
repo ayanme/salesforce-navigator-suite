@@ -187,7 +187,7 @@ For the authoritative interim routing table, see [PROJECT_STANDARD.md §7](../PR
 
 | Domain | What It Means | Primary Source |
 |---|---|---|
-| Help / Configuration | Setup, setup, limitations, licensing | help.salesforce.com |
+| Help / Configuration | Setup, admin, limitations, licensing | help.salesforce.com |
 | Developer | APIs, SDKs, code, platform capabilities | developer.salesforce.com |
 | Architecture | Patterns, design, trade-offs, scalability | architect.salesforce.com |
 | Learning | Guided content, certifications, exams | trailhead.salesforce.com |

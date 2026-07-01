@@ -46,10 +46,10 @@ Create a directory under `skills/` named after the Navigator using kebab-case:
 skills/salesforce-[product]-navigator/
 ```
 
-Name the Navigator definition file to match the directory:
+Name the Navigator definition file `SKILL.md`:
 
 ```
-skills/salesforce-[product]-navigator/salesforce-[product]-navigator.md
+skills/salesforce-[product]-navigator/SKILL.md
 ```
 
 Follow the template defined in PROJECT_STANDARD.md §2 exactly. Every section in the template is required. Do not add sections that are not in the template. Do not repeat repository-wide behavior from the standard — Navigator files inherit it.
@@ -62,7 +62,7 @@ name: salesforce-[product]-navigator
 navigator_version: [version]
 standard_version: [current PROJECT_STANDARD.md version]
 description: >
-  [Intent classifier. Use natural language. Start with "Use when the user asks...". Include what the Navigator owns, representative user intents, and explicit ownership of cross-cutting Salesforce products. May be a multi-line YAML block. Avoid keyword lists and marketing copy.]
+  [Intent classifier. Lead with a third-person capability statement: "This Navigator researches [domain] from official [source] documentation." Follow with a trigger phrase: "Use when the user asks..." Include what the Navigator owns, representative user intents, and explicit ownership of cross-cutting Salesforce products. May be a multi-line YAML block. Avoid keyword lists and marketing copy.]
 ---
 ```
 
@@ -128,7 +128,7 @@ Before writing or modifying a description:
 - Read **`docs/SKILL_ROUTING_RESEARCH.md`** for the validated research behind those principles, including experiment methodology, findings, and known unknowns.
 
 When writing a description:
-- Use natural language that reflects how a user would phrase their question. Start with "Use when the user asks..."
+- Lead with a third-person capability statement ("This Navigator researches [domain] from official [source] documentation."), then follow with a trigger phrase ("Use when the user asks..."). Use natural language that reflects how a user would phrase their question.
 - Explicitly name the documentation domain the Navigator owns and the products within that domain. Do not rely on implied ownership — if a cross-cutting Salesforce product (Agentforce, Data Cloud, etc.) belongs to this Navigator's domain, name it.
 - Include representative user intents as signal, not keyword lists.
 - At domain boundaries where routing ambiguity is likely, add a brief negative signal ("Does not own X — that routes to Y Navigator").
