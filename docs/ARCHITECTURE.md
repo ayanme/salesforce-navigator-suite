@@ -28,6 +28,7 @@ PROJECT_STANDARD.md
         │  - Writing standards
         │  - Documentation trust policy
         │  - Approved sources
+        │  - Evidence philosophy and trust model
         │  - Ownership matrix
         │  - Routing rules
         │  - Cross-domain routing assignments
@@ -56,7 +57,7 @@ The inheritance model above is a conceptual model applied during development. `P
 
 In practice, Claude Skills do not automatically load related repository files. When a single Navigator file is copied or shared outside this repository, `PROJECT_STANDARD.md` is not available to it. The Navigator has no technical access to the shared standard it was built against.
 
-To address this, every Navigator intentionally contains a **Repository Standards** section — a small, compressed summary of the minimum repository behavior required for standalone operation. It covers five essentials: approved sources, documentation as truth, validation requirements, reasoning labels, and scope/deferral. This section is consistent and identical across all Navigators.
+To address this, every Navigator intentionally contains a **Repository Standards** section — a small, compressed summary of the minimum repository behavior required for standalone operation. It covers approved sources, documentation as truth, the evidence trust model (three evidence states, evidence gate, no cross-source substitution), reasoning labels, validation requirements, and scope/deferral. This section is consistent and identical across all Navigators.
 
 This is an intentional portability layer, not a duplication of the repository standard. The distinction is deliberate:
 
@@ -85,7 +86,7 @@ salesforce-navigator-suite/
 │   └── SKILL_ROUTING_RESEARCH.md  # Routing experiment methodology, findings, and design principles
 │
 ├── tests/
-│   └── TRIGGER_TESTS.md      # Routing validation — should/should not trigger per Navigator
+│   └── TRIGGER_TESTS.md      # Routing and guardrail validation — trigger tests and evidence behavior tests per Navigator
 │
 └── skills/
     ├── salesforce-help-navigator/
@@ -233,5 +234,5 @@ The short version:
 1. Confirm the documentation domain has no existing owner.
 2. Identify a primary official Salesforce source.
 3. Write the Navigator definition file following PROJECT_STANDARD.md §2 template.
-4. Add trigger tests to `tests/TRIGGER_TESTS.md`.
+4. Add routing tests and guardrail tests to `tests/TRIGGER_TESTS.md`.
 5. Update `README.md`, `PROJECT_STANDARD.md §6`, and `CHANGELOG.md`.

@@ -5,6 +5,29 @@ This project uses [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0] — 2026-07-03
+
+### Evidence Philosophy and Trust Model
+
+Added a repository-wide evidence philosophy (PROJECT_STANDARD.md §19) that formalizes the trust model across all Navigators.
+
+- **§19 Evidence Philosophy and Trust Model** — canonical definition of the evidence gate (approved source + verified evidence = permission to claim), three evidence states, no cross-source substitution, verification gate, evidence-before-synthesis requirement, honest uncertainty preference, and evidence hierarchy.
+- **§15 Reasoning Vocabulary** — added **Not Verified** label for retrieval failures (JavaScript-rendered shell, timeout, unavailable page, empty response). Updated **Not Documented** definition to apply only when approved sources were successfully consulted and the claim is absent. These two states must never be conflated.
+- **§18 Failure Behavior** — updated to use **Not Verified** (not **Not Documented**) for retrieval failures. Added reference to §19 for the full evidence philosophy.
+- **Repository Standards** (all 8 Navigator files) — updated portability summary to include the three evidence states, evidence gate, and no-substitution rule so Navigators function correctly when distributed independently.
+- **Research Methodology** (all 8 Navigator files) — reverted to Navigator-specific workflow only. Repository-wide evidence philosophy now lives canonically in PROJECT_STANDARD.md §19.
+- **Failure Handling** (all 8 Navigator files) — reverted to Navigator-specific failure message only. Repository-wide failure philosophy now lives canonically in PROJECT_STANDARD.md §18 and §19.
+- `standard_version` bumped to 1.2.0 across all 8 Navigator files.
+
+### Repository Documentation
+
+- **`tests/TRIGGER_TESTS.md`** — Guardrail Tests section added: eight fetch-failure test cases (one per Navigator) and a source substitution table documenting forbidden substitution sources per Navigator. File title and subtitle updated to reflect both routing and evidence validation.
+- **`CONTRIBUTING.md`** — contributor workflow updated to require both routing tests and guardrail tests: Step 5 expanded to cover both test types, Validation Checklist updated with evidence model items (correct evidence state implementation, Not Verified vs Not Documented distinction, no model memory fallback), Pull Request Expectations updated, Product Specialist Step 6 updated. Duplicate CHANGELOG step removed.
+- **`docs/ARCHITECTURE.md`** — inheritance diagram updated to include evidence philosophy and trust model as a first-class PROJECT_STANDARD.md responsibility. Portability layer description updated to reflect the evidence trust model as part of what Repository Standards carries. Repository structure comment for TRIGGER_TESTS.md updated.
+- **`docs/SKILL_ROUTING_RESEARCH.md`** — Future Research section extended with an evidence-grounding research item identifying post-invocation answer quality as a second independent research area. Conclusion extended to acknowledge that routing quality and evidence-grounding quality are separate concerns requiring separate investigation.
+
+---
+
 ## [1.0.0] — 2026-06-30
 
 Initial public release.

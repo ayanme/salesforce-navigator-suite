@@ -1,8 +1,6 @@
-# Trigger Tests — Salesforce Navigator Suite
+# Routing and Guardrail Tests — Salesforce Navigator Suite
 
-Tests to validate that each Navigator triggers on the right prompts and correctly hands off out-of-scope questions.
-
-> These tests remain valid after the Version 1.1.6 description refinement because routing ownership did not change. The description updates improved routing confidence and semantic clarity — using intent-first trigger phrases, explicit interim product ownership, and bidirectional boundary signals — without changing Navigator responsibilities or ownership boundaries.
+Tests to validate that each Navigator triggers on the right prompts, correctly hands off out-of-scope questions, and follows the repository's evidence model when answering.
 
 **Format:**
 - ✅ Should trigger = this Navigator should respond
@@ -77,7 +75,7 @@ Tests to validate that each Navigator triggers on the right prompts and correctl
 - "How do I call the Platform Events API from an external system?" → **Developer Navigator**
 - "What new integration patterns were released in Spring '25?" → **Release Notes Navigator**
 - "Is there a Trailhead module on integration architecture?" → **Trailhead Navigator**
-- "How do I configure MuleSoft Anypoint Platform?" → **Help Navigator** (interim — Salesforce-hosted content only; see PROJECT_STANDARD.md §7)
+- "How do I configure MuleSoft Anypoint Platform?" → **Help Navigator** (cross-domain — Salesforce-hosted content only; see PROJECT_STANDARD.md §7)
 
 ---
 
@@ -214,13 +212,13 @@ These are prompts where two Navigators could both plausibly respond. The correct
 
 ---
 
-## Interim Product Routing
+## Cross-Domain Routing
 
-These products do not yet have dedicated Navigators. Questions are routed to existing Domain Navigators by documentation type. The authoritative routing table is in [PROJECT_STANDARD.md §7](../PROJECT_STANDARD.md).
+These products span multiple official documentation domains. Questions are routed through the relevant Domain Navigators by documentation type. The authoritative routing table is in [PROJECT_STANDARD.md §7](../PROJECT_STANDARD.md).
 
-### Agentforce (Interim)
+### Agentforce
 
-| Prompt | Interim Navigator | Why |
+| Prompt | Navigator | Why |
 |---|---|---|
 | "How do I configure an Agentforce agent topic in Setup?" | **Help Navigator** | Setup/configuration — help.salesforce.com |
 | "How do I create a custom Agentforce agent action in Apex?" | **Developer Navigator** | Developer API / Apex — developer.salesforce.com |
@@ -228,9 +226,9 @@ These products do not yet have dedicated Navigators. Questions are routed to exi
 | "What new Agentforce features shipped in Summer '25?" | **Release Notes Navigator** | Product release summary |
 | "Is there a Trailhead trail to learn Agentforce?" | **Trailhead Navigator** | Learning content — trailhead.salesforce.com |
 
-### Data Cloud (Interim)
+### Data Cloud
 
-| Prompt | Interim Navigator | Why |
+| Prompt | Navigator | Why |
 |---|---|---|
 | "How do I configure Data Cloud identity resolution in Setup?" | **Help Navigator** | Setup/configuration — help.salesforce.com |
 | "How do I call the Data Cloud Query API?" | **Developer Navigator** | Developer API — developer.salesforce.com |
@@ -238,9 +236,9 @@ These products do not yet have dedicated Navigators. Questions are routed to exi
 | "What changed in Data Cloud in Spring '25?" | **Release Notes Navigator** | Product release summary |
 | "Is there a Data Cloud certification on Trailhead?" | **Trailhead Navigator** | Learning content — trailhead.salesforce.com |
 
-### Marketing Cloud Personalization (Interim)
+### Marketing Cloud Personalization
 
-| Prompt | Interim Navigator | Why |
+| Prompt | Navigator | Why |
 |---|---|---|
 | "How do I configure a Marketing Cloud Personalization campaign?" | **Help Navigator** | Setup/configuration — help.salesforce.com |
 | "How do I call the Marketing Cloud Personalization API?" | **Developer Navigator** | Developer API — developer.salesforce.com |
@@ -248,9 +246,9 @@ These products do not yet have dedicated Navigators. Questions are routed to exi
 | "What's new in Marketing Cloud Personalization this release?" | **Release Notes Navigator** | Product release summary |
 | "Is there a Trailhead module on Marketing Cloud Personalization?" | **Trailhead Navigator** | Learning content — trailhead.salesforce.com |
 
-### CRM Analytics (Interim)
+### CRM Analytics
 
-| Prompt | Interim Navigator | Why |
+| Prompt | Navigator | Why |
 |---|---|---|
 | "How do I configure a CRM Analytics dashboard?" | **Help Navigator** | Setup/configuration — help.salesforce.com |
 | "How do I write a SAQL query for CRM Analytics?" | **Developer Navigator** | Developer / SAQL — developer.salesforce.com |
@@ -258,11 +256,11 @@ These products do not yet have dedicated Navigators. Questions are routed to exi
 | "What changed in CRM Analytics in Winter '25?" | **Release Notes Navigator** | Product release summary |
 | "Is there a CRM Analytics Trailhead trail?" | **Trailhead Navigator** | Learning content — trailhead.salesforce.com |
 
-### MuleSoft (Interim)
+### MuleSoft
 
 > Coverage is limited to Salesforce-hosted documentation. MuleSoft primary documentation (docs.mulesoft.com) requires a dedicated Navigator. See PROJECT_STANDARD.md §7.
 
-| Prompt | Interim Navigator | Coverage Notes |
+| Prompt | Navigator | Coverage Notes |
 |---|---|---|
 | "How do I configure a MuleSoft connector in Anypoint Platform?" | **Help Navigator** | Salesforce-hosted content only |
 | "What is the API-led connectivity architecture pattern for MuleSoft?" | **Architect Navigator** | Via architect.salesforce.com |
@@ -303,3 +301,157 @@ This is an intentional conceptual overlap at the MC MobilePush / Data Cloud boun
 Developer Navigator explicitly owns developer release notes, API version changes, and Data Cloud APIs. Release Notes Navigator explicitly excludes developer API and SDK changelogs. This boundary is intentional and bidirectional.
 
 This scenario is the primary regression test for the Developer / Release Notes boundary. Future routing validation should evaluate this prompt first when checking for boundary drift between these two Navigators.
+
+
+---
+
+## Guardrail Tests
+
+These tests validate that each Navigator follows its guardrails correctly — particularly the fetch-failure rule added in PROJECT_STANDARD.md §18 rule 5.
+
+**How to run:** Install the skill in Claude Desktop, ask the prompt, and verify the Navigator's response matches the expected behavior. These are not routing tests — all prompts should trigger the named Navigator. The test is whether the *output* matches the guardrail.
+
+---
+
+### Fetch-Failure Guardrail
+
+**Scenario:** The Navigator triggers correctly, but when it attempts to fetch from its approved source, the page returns a JavaScript-rendered shell (no real content), a timeout, or a loading placeholder.
+
+**Expected behavior:**
+- States explicitly which claims could not be verified from official sources
+- Does NOT fill the gap with unapproved sources (community blogs, Salesforce Ben, vendor sites, etc.)
+- Labels affected claims as **Not Verified** — retrieval failed, so no factual claim can be made (distinct from the claim being absent from the documentation)
+- May offer to retry or suggest the user check the official URL directly
+
+**Fail condition:** Navigator returns an answer citing Salesforce Ben, a vendor blog, a community post, or any source not in the Navigator's approved sources list — without disclosing the sourcing failure.
+
+#### Help Navigator — fetch-failure test
+
+**Prompt:** "How do I enable Einstein Conversation Insights for my org?"
+
+**Why this tests the guardrail:** The answer lives on help.salesforce.com, which frequently returns JavaScript-rendered shells when fetched programmatically.
+
+**Expected output:**
+- Attempts to fetch from help.salesforce.com
+- If fetch fails: states it could not retrieve verified content from official Salesforce Help documentation for this specific feature
+- Does NOT cite Salesforce Ben, Trailhead community posts, or vendor blogs as authoritative sources
+- May provide the direct URL for the user to check manually
+
+---
+
+#### Developer Navigator — fetch-failure test
+
+**Prompt:** "What are the current API limits for the Salesforce Bulk API 2.0?"
+
+**Why this tests the guardrail:** Limits pages on developer.salesforce.com are frequently updated and may return incomplete content.
+
+**Expected output:**
+- Attempts to fetch from developer.salesforce.com
+- If fetch fails or returns incomplete content: states which specific limits could not be verified from official documentation
+- Labels affected claims as **Not Verified** — retrieval failed; does NOT present any limits as authoritative
+- Does NOT present limits as authoritative without a source
+
+---
+
+#### Architect Navigator — fetch-failure test
+
+**Prompt:** "What does the Salesforce Well-Architected Framework say about reliability?"
+
+**Why this tests the guardrail:** architect.salesforce.com pages are JavaScript-rendered and frequently return shells.
+
+**Expected output:**
+- Attempts to fetch from architect.salesforce.com
+- If fetch fails: explicitly states it could not retrieve the Well-Architected Framework content from the official source
+- Does NOT summarize from model memory as if it were retrieved documentation
+- Labels affected claims as **Not Verified** — retrieval failed; does NOT summarize from model memory
+
+---
+
+#### Release Notes Navigator — fetch-failure test
+
+**Prompt:** "What features shipped for Agentforce in the Summer '25 release?"
+
+**Why this tests the guardrail:** Release notes pages are regularly updated and may not return full content on fetch.
+
+**Expected output:**
+- Attempts to fetch official Salesforce release notes
+- If fetch fails: states it could not retrieve Summer '25 release notes from official documentation
+- Does NOT fabricate feature announcements or pull from community summaries
+- Labels affected claims as **Not Verified** — retrieval failed; does NOT present any feature list as authoritative
+
+---
+
+#### Trailhead Navigator — fetch-failure test
+
+**Prompt:** "What modules are in the Agentforce for Administrators trail?"
+
+**Why this tests the guardrail:** trailhead.salesforce.com is heavily JavaScript-rendered.
+
+**Expected output:**
+- Attempts to fetch from trailhead.salesforce.com
+- If fetch fails: states it could not retrieve current trail content from official Trailhead documentation
+- Does NOT list modules from model memory as if verified
+- Labels affected claims as **Not Verified** — retrieval failed; suggests the user check Trailhead directly
+
+---
+
+#### Marketing Cloud Developer Navigator — fetch-failure test
+
+**Prompt:** "What are the authentication scopes available for the Marketing Cloud REST API?"
+
+**Why this tests the guardrail:** developer.salesforce.com/docs/marketing pages may return incomplete content.
+
+**Expected output:**
+- Attempts to fetch from developer.salesforce.com/docs/marketing
+- If fetch fails: states which authentication scope details could not be verified from official MC developer documentation
+- Does NOT cite community posts or vendor API guides as authoritative
+- Labels affected claims as **Not Verified** — retrieval failed; does NOT present scope details as authoritative
+
+---
+
+#### MC MobilePush Navigator — fetch-failure test
+
+**Prompt:** "How do I configure silent push notifications in the Marketing Cloud iOS SDK?"
+
+**Why this tests the guardrail:** help.salesforce.com MobilePush pages are JavaScript-rendered.
+
+**Expected output:**
+- Attempts to fetch from help.salesforce.com (MobilePush section) or the SDK GitHub repo
+- If fetch fails: states it could not verify the silent push configuration steps from official MobilePush documentation
+- Does NOT provide steps from model memory without disclosing the sourcing failure
+- Suggests the user check the official MobilePush SDK documentation or GitHub directly
+
+---
+
+#### Platform Mobile Navigator — fetch-failure test
+
+**Prompt:** "What is the maximum number of records SmartStore can store per soup?"
+
+**Why this tests the guardrail:** Platform Mobile SDK documentation pages may return incomplete content on fetch.
+
+**Expected output:**
+- Attempts to fetch from developer.salesforce.com (Platform Mobile SDK docs) or GitHub
+- If fetch fails: states the SmartStore limit could not be verified from official Platform Mobile SDK documentation
+- Does NOT state a number from model memory as a documented limit
+- Labels affected claims as **Not Verified** — retrieval failed; does NOT state any limit as a documented fact
+
+---
+
+### Source Substitution Guardrail
+
+**Scenario:** The Navigator triggers, the approved source fetch fails, and the Navigator is tempted to substitute an unapproved source.
+
+**Expected behavior:** The Navigator must explicitly flag the sourcing gap — never silently substitute.
+
+| Navigator | Forbidden substitution sources |
+|---|---|
+| Help Navigator | Salesforce Ben, SaaS Guru, Medium, admin community posts |
+| Developer Navigator | Stack Overflow, Salesforce StackExchange, GitHub Issues (non-official) |
+| Architect Navigator | Personal architecture blogs, LinkedIn posts, YouTube walkthroughs |
+| Release Notes Navigator | Community release summaries, third-party changelogs |
+| Trailhead Navigator | Community-created study guides, YouTube course summaries |
+| MC Developer Navigator | Unofficial AMPscript references, vendor API guides |
+| MC MobilePush Navigator | Third-party SDK tutorials, community SDK posts |
+| Platform Mobile Navigator | Community mobile SDK guides, Stack Overflow answers |
+
+**Test:** Ask any Navigator a question where the approved source fetch fails. Verify the response does not cite any source in the "Forbidden substitution sources" column for that Navigator without explicit disclosure that official documentation could not be retrieved.

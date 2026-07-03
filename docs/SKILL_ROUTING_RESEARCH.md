@@ -211,6 +211,7 @@ The following experiments would extend the findings above.
 - **Cross-version validation** — repeat routing experiments across Claude model versions to identify which findings are stable and which are model-specific.
 - **Invocation frequency measurement** — design experiments that specifically measure invocation frequency rather than routing accuracy, to understand the relationship between description quality and Claude's tool-use threshold.
 - **Real-world telemetry** — if deployment infrastructure permits, collect real routing data to compare against lab experiment results.
+- **Evidence-grounding behavior** — The routing experiments measured whether the correct Navigator was selected. A distinct failure class emerged during implementation: a correctly-selected Navigator may substitute model memory when approved sources cannot be retrieved, rather than disclosing that verification failed. Open questions include how reliably Claude distinguishes a claim absent from the documentation (Not Documented) from one that could not be verified due to retrieval failure (Not Verified), whether evidence-before-synthesis constraints hold consistently under varied retrieval conditions, and how these behaviors vary across Claude model versions. Evidence-grounding is a second independent research area from routing research — one that addresses answer quality after correct invocation rather than invocation accuracy itself.
 
 ---
 
@@ -223,3 +224,5 @@ The most significant validated finding is that explicit ownership of cross-cutti
 Routing decisions in this repository should continue to be evidence-driven. When descriptions are changed, the change should be motivated by a routing hypothesis and evaluated against measurable criteria — not adjusted based on how the description reads to a human.
 
 The remaining unknowns documented above represent the honest boundary of what these experiments established. Future contributors should treat those open questions as research opportunities rather than assumed answers.
+
+These experiments addressed one layer of the trust problem: invocation routing. A separate layer — whether a correctly-invoked Navigator answers from verified evidence rather than model memory — is a distinct research problem that routing experiments do not address. Selecting the correct Navigator is a necessary but not sufficient condition for trustworthy answers. Future repository evolution may investigate both layers independently, with routing architecture and evidence-grounding architecture treated as complementary rather than overlapping concerns.

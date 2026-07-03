@@ -66,13 +66,22 @@ description: >
 ---
 ```
 
-### Step 5 — Write trigger tests
+### Step 5 — Write trigger tests and guardrail tests
 
-Every new Navigator requires trigger tests. Add them to `tests/TRIGGER_TESTS.md` following the format for existing Navigators:
+Every new Navigator requires two types of tests. Add both to `tests/TRIGGER_TESTS.md` following the format for existing Navigators.
+
+**Routing trigger tests** — validate that the Navigator activates on the right questions and defers on the wrong ones:
 
 - At least 5 "Should Trigger" examples with realistic Salesforce user questions.
 - At least 5 "Should NOT Trigger" examples with the correct Navigator named.
 - Include edge cases where two Navigators might both plausibly respond.
+
+**Guardrail tests** — validate that the Navigator follows the repository's evidence model and source restrictions correctly:
+
+- At least one fetch-failure scenario: what happens when an approved source cannot be retrieved. The Navigator should label affected claims as **Not Verified**, not **Not Documented**, and must not substitute another source or fall back to model memory.
+- At least one source-substitution scenario: confirm the Navigator does not silently cite unapproved sources when its approved sources fail.
+
+Guardrail tests verify behavioral correctness — the output under failure conditions — not just routing. A Navigator that routes correctly but answers from model memory when evidence fails does not pass the repository's evidence model.
 
 ### Step 6 — Update supporting files
 
@@ -149,9 +158,14 @@ Before submitting changes to any description, review all Navigator descriptions 
 - [ ] Scope and Out of Scope are explicit with no conflicts against existing Navigators
 - [ ] Routing Rules cover edge cases
 - [ ] Trigger tests are added to `tests/TRIGGER_TESTS.md`
+- [ ] Guardrail tests are added to `tests/TRIGGER_TESTS.md`
 - [ ] README.md Skills table updated
 - [ ] PROJECT_STANDARD.md §6 Ownership Matrix updated
 - [ ] CHANGELOG.md updated
+- [ ] Repository Standards section correctly implements the evidence trust model (three evidence states, evidence gate, no cross-source substitution) per PROJECT_STANDARD.md §19
+- [ ] Reasoning labels distinguish Documented, Not Documented, and Not Verified per PROJECT_STANDARD.md §15
+- [ ] Evidence failures are correctly classified as Not Verified rather than Not Documented
+- [ ] The Navigator does not fall back to model memory when evidence cannot be obtained from approved sources
 - [ ] No repository-wide behavior is duplicated from the standard
 - [ ] No new ownership conflicts introduced
 
@@ -162,7 +176,7 @@ Before submitting changes to any description, review all Navigator descriptions 
 - One Navigator per pull request.
 - Include a brief description of the documentation domain and why it needs its own Navigator.
 - Link any relevant Salesforce documentation that confirms the domain scope.
-- All trigger tests must be present before review.
+- All routing tests and guardrail tests must be present before review.
 
 ---
 
@@ -234,12 +248,8 @@ After removal, confirm that no domain is now unowned. Run the Confirmed Ownershi
 
 ### Step 5 — Update CHANGELOG.md
 
-If the Navigator covers a product previously handled through cross-domain routing, note this in CHANGELOG.md as a Minor version increment alongside the new Navigator entry.
+Log the introduction of the new Navigator as a Minor version increment in CHANGELOG.md. If the Navigator covers a product previously handled through cross-domain routing, include the ownership transfer in the same entry.
 
-### Step 6 — Update CHANGELOG.md
+### Step 6 — Add routing and guardrail tests
 
-Log the ownership transfer and the introduction of the new Navigator as a Minor version increment in CHANGELOG.md.
-
-### Step 7 — Run Trigger Tests
-
-Update `tests/TRIGGER_TESTS.md` to add trigger tests for the new Navigator. Verify that existing Domain Navigator tests no longer include the retired interim topics as "Should Trigger" examples.
+Add routing tests and guardrail tests to `tests/TRIGGER_TESTS.md` for the new Navigator, following the format in existing Navigator sections and the Guardrail Tests section. Verify that existing Domain Navigator tests no longer include examples whose expected routing has changed as "Should Trigger" examples.

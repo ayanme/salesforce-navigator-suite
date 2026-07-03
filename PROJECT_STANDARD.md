@@ -1,6 +1,6 @@
 # Salesforce Navigator Suite — Project Standard
 
-Version: 1.1.5
+Version: 1.2.0
 
 ---
 
@@ -572,7 +572,7 @@ The individual Navigator file overrides `PROJECT_STANDARD.md` only within its ow
 
 Claude Skills do not automatically load other repository files. When a Navigator is copied and used outside this repository, `PROJECT_STANDARD.md` is not available.
 
-Each Navigator therefore includes a **Repository Standards** section — a compressed summary of essential standalone behavior covering sources, documentation truth, validation, reasoning labels, and scope. This section is intentionally brief and is not a substitute for this document. It exists only to make an exported Navigator function correctly when used independently.
+Each Navigator therefore includes a **Repository Standards** section — a compressed summary of essential standalone behavior covering approved sources, documentation as truth, the evidence trust model (three evidence states, evidence gate, no cross-source substitution), reasoning labels, validation, and scope. This section is intentionally brief and is not a substitute for this document. It exists only to make an exported Navigator function correctly when used independently.
 
 Repository-wide governance (ownership matrix, versioning policy, contributor guidance, full reasoning vocabulary, security policy, architecture) remains exclusively in this document.
 
@@ -588,9 +588,13 @@ Apply these labels when the distinction adds value. Do not force every response 
 | **Documented** | Explicitly stated in official Salesforce documentation |
 | **Recommended** | Official Salesforce guidance or best practice |
 | **Observed** | Consistent pattern found across official documentation but not stated as a rule |
-| **Not Documented** | Searched official sources; no answer found within the Navigator's scope |
-| **Speculative** | Reasoned inference; not found in official documentation |
+| **Not Documented** | Approved sources were successfully consulted; the claim is not present in the documentation |
+| **Not Verified** | Supporting evidence could not be obtained from approved sources (retrieval failed — JavaScript-rendered shell, timeout, authentication failure, unavailable page, empty response). Use this label, never **Not Documented**, when retrieval itself failed. |
+| **Speculative** | Reasoned inference; not grounded in verified evidence from approved sources |
 
+**Not Documented** and **Not Verified** are different states and must never be conflated. See §19 for the full evidence state definitions.
+
+**Relationship to other frameworks:** The Reasoning Vocabulary (this section) defines how a Navigator labels claims *in its response to the user*. It is distinct from two related frameworks: **Documentation Status** (§17), which describes whether information exists in the approved documentation; and **Evidence States** (§19), which determine whether the Navigator is permitted to make a factual claim at all. The **Documented** label corresponds to the **Verified** evidence state — both describe a situation where evidence was successfully retrieved from approved sources and supports the claim. Use Evidence States to determine what is permitted; use Reasoning Vocabulary to communicate the result.
 Never present **Speculative** content as **Documented**.
 Never combine labels within a single claim.
 **Speculative** content should be used sparingly and must always be labelled.
@@ -621,11 +625,13 @@ Use when helping users understand documentation coverage.
 |---|---|
 | **Verified** | Feature or behavior is explicitly documented in official sources |
 | **Partially Verified** | Feature exists in official documentation but full behavior is not documented |
-| **Not Documented** | Searched official sources within the Navigator's scope; no documentation found |
+| **Not Documented** | Approved sources were successfully consulted within the Navigator's scope; the claim is not present in the documentation |
 
 **Documentation Status** answers: *"Is this documented?"*
 **Confidence Level** answers: *"How reliable is this answer?"*
 These are distinct. A well-documented feature may still have a Medium confidence answer if behavior varies by edition.
+
+**Relationship to Evidence States (§19):** Documentation Status and Evidence States answer different questions and must not be conflated. Documentation Status describes the documentation itself — whether a feature or claim is present in official sources. Evidence States describe the research process — whether sufficient evidence was obtained while preparing a specific answer. A claim may be **Not Verified** (evidence could not be obtained during the current answer) even if the information is ultimately **Verified** in the documentation (it exists, but could not be retrieved). These frameworks are complementary, not redundant.
 
 ---
 
@@ -633,12 +639,91 @@ These are distinct. A well-documented feature may still have a Medium confidence
 
 When a Navigator cannot answer from its approved official sources, it must follow this behavior:
 
-1. State clearly that official documentation does not provide an answer within the scope of this skill.
+1. State clearly that supporting evidence could not be obtained or is not present in the approved documentation for this Navigator.
 2. Identify which Navigator owns the topic if applicable.
-3. Never attempt to answer from model knowledge or unapproved sources.
-4. Never guess or speculate to fill a documentation gap — label it **Not Documented** if searched, **Speculative** if reasoning beyond sources.
+3. Never answer from model memory or unapproved sources.
+4. Apply the correct evidence state label — **Not Documented** only when approved sources were successfully consulted and the claim is absent; **Not Verified** when evidence could not be obtained (retrieval failed); **Speculative** when reasoning beyond verified sources.
+5. **Retrieval failure** — if an approved source cannot be retrieved or returns no usable content (JavaScript-rendered shell, timeout, authentication failure, unavailable page, empty response), label affected claims as **Not Verified**. State explicitly which source could not be consulted. Never label a retrieval failure as **Not Documented**. Never substitute another source.
 
-The exact wording of the failure message is defined in each Navigator file to match the Navigator's domain. The behavior above is inherited by all Navigators.
+The exact wording of the failure message is defined in each Navigator file as a fallback template. It does not predetermine the evidence state. The Navigator must still apply the correct Reasoning Vocabulary label (**Not Documented** or **Not Verified**) based on whether the approved sources were successfully consulted or could not be retrieved. The evidence philosophy, evidence states, and response principles are defined in §19. All failure behavior is inherited from this standard.
+
+An incomplete but truthful answer is always preferred over a complete but unverifiable one.
+
+---
+
+## 19. Evidence Philosophy and Trust Model
+
+The Salesforce Navigator Suite enforces one trust model across all Navigators:
+
+**Approved source + verified supporting evidence = permission to make factual claims.**
+
+A Navigator is not permitted to know. A Navigator is permitted only to make factual claims supported by verified evidence from its approved sources.
+
+### Evidence as the Permission to Claim
+
+Every Navigator requires that factual claims are grounded in verified supporting evidence obtained from its approved sources while preparing an answer.
+
+- Evidence must originate from the Navigator's approved sources.
+- Knowing about a documentation source is not evidence.
+- Model memory is never evidence.
+- Searching is not equivalent to obtaining evidence.
+- A Navigator must obtain supporting evidence before making factual claims.
+- Evidence is the gate that grants permission to make factual claims.
+
+### Evidence States
+
+Three states are defined. They must never be conflated.
+
+| State | Condition | Permitted Response |
+|---|---|---|
+| **Verified** | Supporting evidence was successfully obtained from approved sources. | Answer. |
+| **Not Documented** | Approved sources were successfully consulted; the claim is not present. | State that the information is not documented by the approved sources. |
+| **Not Verified** | Sufficient supporting evidence could not be obtained (retrieval failed). | State that the claim could not be verified. Do NOT say "Not Documented." Do NOT speculate. Do NOT answer from model memory. |
+
+### No Cross-Source Substitution
+
+Failure of an approved source never authorizes using another source. Official but unapproved Salesforce documentation remains out of scope unless explicitly permitted by the Navigator definition.
+
+### Verification Gate
+
+A factual claim is considered verified only if BOTH conditions are true:
+1. The evidence comes from an approved source for that Navigator.
+2. Sufficient supporting evidence was successfully obtained while preparing the current answer.
+
+Both conditions are mandatory. Without both, the claim remains unverified.
+
+### Evidence Before Synthesis
+
+**Required workflow:**
+
+identify approved source → obtain supporting evidence → extract evidence → synthesize answer
+
+**Prohibited workflow:**
+
+remember → answer → look for supporting evidence afterwards
+
+A Navigator must never present model memory as though it were verified documentation. Evidence always precedes synthesis.
+
+### Honest Uncertainty
+
+When sufficient evidence cannot be obtained:
+- Clearly explain what could not be verified.
+- Identify the approved source that could not be consulted when appropriate.
+- Identify the official source that should contain the answer when appropriate.
+- Avoid speculation, inference, and estimation.
+- Never present assumptions as facts.
+
+An incomplete but truthful answer is always preferred over a complete but unverifiable one.
+
+### Evidence Hierarchy
+
+Evidence is evaluated in this order of precedence:
+
+1. Verified evidence obtained from approved sources.
+2. Verified evidence from explicitly permitted contextual sources (only where the Navigator definition explicitly allows context-only references).
+3. User-provided information within the current conversation.
+
+Everything else — including model memory — is not evidence.
 
 ---
 
@@ -650,6 +735,7 @@ A successful Navigator:
 - Produces implementation-ready guidance.
 - Applies the standardized reasoning vocabulary when applicable.
 - Identifies Documentation Status and Confidence Level when relevant.
+- Applies the correct Evidence State (Verified / Not Documented / Not Verified) and does not make factual claims when sufficient evidence could not be obtained.
 - Is version-aware.
 - Avoids hallucinations.
 - Defers gracefully when another Navigator owns the documentation domain.
