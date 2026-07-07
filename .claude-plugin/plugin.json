@@ -1,5 +1,5 @@
 {
-  "name": "salesforce-navigator-suite-plugin",
+  "name": "salesforce-navigator-suite",
   "version": "1.1.5",
   "description": "Eight Claude Skills that route Salesforce questions to the correct official documentation domain — Help, Developer, Architect, Release Notes, Trailhead, Marketing Cloud Developer, Marketing Cloud MobilePush, and Platform Mobile — including Agentforce and Data Cloud coverage.",
   "author": {
