@@ -49,16 +49,23 @@ Claude Skills require the **Claude desktop app**. Skill support varies by plan a
 
 ## Installation
 
-Clone or download this repository, then open **Claude Desktop → Settings → Capabilities → Skills** and click **Add Skill**.
+**Option 1 — Install as a plugin (recommended)**
 
-- **Individual Navigator** — point to a single skill directory (e.g. `skills/salesforce-help-navigator/`). Use this when you only need one documentation domain.
-- **Full suite** — add each directory under `skills/` as a separate skill. Use this when you want the complete routing architecture with all 8 Navigators working together.
+This repository includes a `.claude-plugin/plugin.json` manifest, so all 8 Navigators install together in one step:
 
-You can also zip any skill directory as a `.skill` file and add it via **Add Skill**.
+1. Clone or download this repository.
+2. In Claude Desktop or Cowork: **Settings → Capabilities → Plugins → Add Plugin**, then point to the repository folder (or a zipped copy of it).
+3. All 8 Navigators install together, fully configured with their existing routing — no per-skill setup needed.
+
+**Option 2 — Individual Navigator**
+
+Only need one documentation domain? Open **Settings → Capabilities → Skills → Add Skill** and point to a single skill directory (e.g. `skills/salesforce-help-navigator/`).
+
+**Option 3 — Full suite as individual skills**
+
+Prefer not to use the plugin manifest? Add each directory under `skills/` as a separate skill to get all 8 Navigators working together.
 
 Each Navigator operates independently. The suite is designed so Navigators complement each other — when a question falls outside one Navigator's scope, it identifies which Navigator to use instead.
-
-> **Packaged `.skill` files** are not yet available. Install directly from the source directories above.
 
 ---
 
